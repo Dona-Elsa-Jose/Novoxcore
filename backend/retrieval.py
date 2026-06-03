@@ -24,16 +24,27 @@ def retrieve_context(
     # Query rewriting for company overview questions
     query_lower = query.lower()
 
-    if (
-        "what is novoxcore" in query_lower
-        or "tell me about novoxcore" in query_lower
-        or "tell about novoxcore" in query_lower
-        or "about novoxcore" in query_lower
-    ):
-        query = (
-            "novoxcore company overview "
-            "digital product agency"
-        )
+    if any(keyword in query_lower for keyword in [
+    "what is novoxcore",
+    "tell me about novoxcore",
+    "tell about novoxcore",
+    "about novoxcore",
+    "about us",
+    "who are you",
+    "company overview",
+    "about company",
+    "about the company",
+    "tell me about your company"
+]):
+     query = (
+        "novoxcore company overview "
+        "digital product agency "
+        "ai powered branding "
+        "ui ux design "
+        "web development "
+        "mobile development "
+        "intelligent automation"
+    )
 
     query_vector = get_embedding(query)
 

@@ -44,4 +44,11 @@ Rules:
 11. Format answers in a clean and readable way using bullet points when listing multiple items.
 
 12. Keep answers concise while ensuring important information is included.
+
+14. Do not generate Markdown links.
+    Show contact information as plain text.
+
+    Example:
+    Email: novoxcoretech@gmail.com
+    Phone: +91 9074343614
 """
