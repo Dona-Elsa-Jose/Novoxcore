@@ -4,15 +4,9 @@ from pathlib import Path
 ROOT_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT_DIR))
 
-from langchain_ollama import ChatOllama
-
+from backend.gemini_client import generate_response
 from backend.retrieval import retrieve_context
 from backend.prompt import SYSTEM_PROMPT
-
-
-llm = ChatOllama(
-    model="llama3"
-)
 
 
 def answer_question(question: str):
@@ -29,11 +23,16 @@ def answer_question(question: str):
             "knowledge base."
         )
 
-    # Use only the best matching chunk
     context_text = contexts[0]
 
     prompt = f"""
 {SYSTEM_PROMPT}
+
+IMPORTANT:
+- Return plain text only.
+- Do not use markdown.
+- Do not generate markdown links.
+- Do not use [text](url) format.
 
 CONTEXT:
 {context_text}
@@ -50,15 +49,15 @@ ANSWER:
 
     try:
 
-        response = llm.invoke(prompt)
+        response = generate_response(prompt)
 
-        if not response.content:
+        if not response:
             return (
                 "I couldn't generate "
                 "an answer."
             )
 
-        return response.content.strip()
+        return response.strip()
 
     except Exception as e:
 
